@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSFree-Luckfox Web Dashboard</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            min-height: 100vh;
+        }
+
+        .container {
+            min-height: 100vh;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 0;
+            color: #333;
+        }
+
+        .button-group form, .link-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        .button i {
+            margin-right: 8px;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+        
+        .flag {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: auto;
+            z-index: 1000;
+        }
+    </style>
+    <script src="./payload.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentHost = window.location.hostname;
+            const button = document.getElementById('exploit-button');
+            button.onclick = () => {
+                import("./alert.mjs");
+            };
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+         <header>
+            <h1>PSFree-Luckfox Web Dashboard for PS4 9.00</h1>
+            <h2> ★ v1.0.0 ★ </h2>
+        </header>
+        <main>
+            <div class="button-group">
+                <button id="exploit-button" name="run_psfree_lapse" class="button"><i class="fas fa-play"></i> Exploit</button>
+                <button id="shutdown-button" name="shutdown" class="button"><i class="fas fa-power-off"></i> Shutdown Luckfox</button>
+                <button id="disable-eth0-button" name="eth0" class="button"><i class="fas fa-network-wired"></i> Disable Eth0</button>
+            </div>
+            <pre id="console" hidden></pre>
+        </main>
+        <footer>
+            <p>by <a href="https://github.com/prodeveloper0/PSFree-Luckfox">@prodeveloper0</a></p>
+            <p>credits: 
+                <a href="https://github.com/kmeps4/PSFree">@kmeps4</a> (Exploit) and        
+                <a href="https://github.com/harsha-0110/PPPwn-Luckfox">@harsha-0110</a> (Web Dashboard) who contributed to the PS4 scene!</p>
+        </footer>
+    </div>
+</body>
+</html>
