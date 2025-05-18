@@ -1,49 +1,40 @@
 import os
+import logging
+
 import click
-import uvicorn
 
 from pathlib import Path
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+
+from flask import Flask, send_from_directory, jsonify
 
 
-app = FastAPI()
-virtual_root_path = "PSFree"
+app = Flask(__name__)
+
+current_files_dir = Path(os.getcwd())
+static_files_dir = current_files_dir / "PSFree"
 exclude_path = ["", "index.html", "favicon.ico"]
 
 
-virtual_static_files_dir = Path(os.getcwd()) / virtual_root_path
-current_static_files_dir = Path(os.getcwd())
+@app.route("/api/<path:path>", methods=["GET"])
+def read_api_routes(path: str):
+    return jsonify({"path": path})
 
 
-@app.post("/api/{path:path}")
-def post_api_root(path: str):
-    return "Hello, world"
-
-
-@app.get("/api/{path:path}")
-def get_api_root(path: str):
-    return "Hello, world"
-
-
-@app.get("/{path:path}")
-def get_root(path: str):
-    path = "index.html" if not path else path
-
-    file_path = (current_static_files_dir / path) if path in exclude_path else (virtual_static_files_dir / path)
-    
-    if file_path.exists() and file_path.is_file():
-        return FileResponse(file_path)
-    else:
-        return {"error": "File not found"}, 404
+@app.route("/<path:path>", methods=["GET"])
+@app.route("/", methods=["GET"])
+def catch_all_routes(path: str = ""):
+    if path == "":
+        path = "index.html"
+    file_path = (current_files_dir if path in exclude_path else static_files_dir) / path
+    return send_from_directory(file_path.parent, file_path.name)
 
 
 @click.command()
-@click.option("--host", default="0.0.0.0", help="Host to run the server on.")
-@click.option("--port", default=9191, help="Port to run the server on.")
-def main(host: str, port: int):
-    uvicorn.run(app, host=host, port=port, loop="uvloop")
-
+@click.option("--host", default="0.0.0.0", help="Host to run the server on")
+@click.option("--port", default=9191, help="Port to run the server on")
+@click.option("--debug", is_flag=True, help="Enable debug mode")
+def main(host: str, port: int, debug: bool):
+    app.run(host=host, port=port, debug=debug)
 
 if __name__ == "__main__":
     main()
