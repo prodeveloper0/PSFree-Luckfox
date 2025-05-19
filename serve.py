@@ -8,11 +8,11 @@ from pathlib import Path
 from flask import Flask, send_from_directory, jsonify
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 
 current_files_dir = Path(os.getcwd())
-static_files_dir = current_files_dir / "PSFree"
-exclude_path = ["", "index.html", "favicon.ico"]
+psfree_files_dir = current_files_dir / "PSFree"
+static_files_dir = current_files_dir / "static"
 is_debug = False
 
 
@@ -38,12 +38,18 @@ def read_api_routes(path: str):
     return jsonify({"path": path})
 
 
-@app.route("/<path:path>", methods=["GET"])
 @app.route("/", methods=["GET"])
-def catch_all_routes(path: str = ""):
-    if path == "":
-        path = "index.html"
-    file_path = (current_files_dir if path in exclude_path else static_files_dir) / path
+@app.route("/static/<path:path>", methods=["GET"])
+def catch_static_routes(path: str = "index.html"):
+    file_path = static_files_dir / path
+    if os.path.isdir(file_path):
+        file_path = file_path / "index.html"
+    return send_from_directory(file_path.parent, file_path.name)
+
+
+@app.route("/<path:path>", methods=["GET"])
+def catch_all_routes(path: str):
+    file_path = psfree_files_dir / path
     return send_from_directory(file_path.parent, file_path.name)
 
 
@@ -54,7 +60,7 @@ def catch_all_routes(path: str = ""):
 def main(host: str, port: int, debug: bool):
     global is_debug
     is_debug = debug
-    app.run(host=host, port=port, debug=debug)
+    app.run(host=host, port=port, debug=debug, threaded=True)
 
 
 if __name__ == "__main__":

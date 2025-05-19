@@ -54,6 +54,8 @@
             text-decoration: none;
             transition: background-color 0.3s, transform 0.2s;
             cursor: pointer;
+            margin: 5px;
+            width: 250px;
         }
 
         .button:hover {
@@ -90,12 +92,12 @@
         }
         
         .flag {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            width: 50px;
-            height: auto;
-            z-index: 1000;
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          width: 50px;
+          height: auto;
+          z-index: 1000;
         }
     </style>
     <script src='./payload.js'></script>
@@ -104,6 +106,11 @@
             const exploitButton = document.getElementById('exploit-button');
             exploitButton.onclick = () => {
                 import('./alert.mjs');
+            };
+
+            const payloads900Button = document.getElementById('payloads-900-button');
+            payloads900Button.onclick = () => {
+                window.location.href = '/static/payloads-900';
             };
 
             const shutdownButton = document.getElementById('shutdown-button');
@@ -134,21 +141,24 @@
     <div class='container'>
          <header>
             <h1>PSFree-Luckfox Web Dashboard for PS4 9.00</h1>
-            <h2> ★ v1.0.0 ★ </h2>
+            <h2> ★ v1.1.0 ★ </h2>
         </header>
         <main>
             <div class='button-group'>
                 <button id='exploit-button' name='run_psfree_lapse' class='button'><i class='fas fa-play'></i> Exploit</button>
+                <button id='payloads-900-button' name='payloads_900' class='button'><i class='fas fa-play'></i> 9.00 Payloads</button>
+            </div>
+            <div class='button-group'>
                 <button id='shutdown-button' name='shutdown' class='button'><i class='fas fa-power-off'></i> Shutdown Luckfox</button>
                 <button id='disable-eth0-button' name='eth0' class='button'><i class='fas fa-network-wired'></i> Disable Eth0</button>
-            </div>
             <pre id='console' hidden></pre>
         </main>
         <footer>
             <p>by <a href='https://github.com/prodeveloper0/PSFree-Luckfox'>@prodeveloper0</a></p>
             <p>credits: 
-                <a href='https://github.com/kmeps4/PSFree'>@kmeps4</a> (Exploit) and        
-                <a href='https://github.com/harsha-0110/PPPwn-Luckfox'>@harsha-0110</a> (Web Dashboard) who contributed to the PS4 scene!</p>
+                <a href='https://github.com/kmeps4/PSFree'>@kmeps4</a> (Exploit),        
+                <a href='https://github.com/harsha-0110/PPPwn-Luckfox'>@harsha-0110</a> (Web Dashboard) and 
+                <a href='https://github.com/0x1iii1ii/PPPwn-Luckfox'>@0x1iii1ii</a> (Web Dashboard / Payloads) who contributed to the PS4 scene!</p>
         </footer>
     </div>
 </body>
