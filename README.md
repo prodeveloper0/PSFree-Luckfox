@@ -22,13 +22,16 @@ Follow this tutorial
 
 ## How to use it on my PS4?
 ### Configure Network
-* Go to `Setting` and select `Network`.
+* Go to `Settings` and select `Network`.
 * Select `Set Up Internet Connection` and choose `Use a LAN Cable`.
-* Select `Custom` and choose `Manual`.
-* Input IP Address `10.1.1.100` and Subnet Mask `255.255.255.0` and click `Next`.
-* MTU Settings set `Automatic` and Proxy Server set `Do Not Use`.
+* Select `Custom` and choose `Automatic` in IP Address Settings.
+* Select `Do Not Specify` in DHCP Host Name.
+* Select `Automatic` in DNS Settings.
+* Select `Automatic` in MTU Settings.
+* Select `Do Not Use` in Proxy Server
 ### Run Exploit
-* Open web browser in your PS4. and go to `http://10.1.1.1:9191`.
+* Go to `Settings` and select `User's Guide/Helpful Info` and select `User's Guide`.
+    *  Or open web browser, go to `http://psfree-luckfox.local`
 * Click `Exploit` button.
     * `There is not enough free memory` is showing, the exploit is failed.
     * Try again until showing `kernel exploit succeeded!`.
