@@ -5,7 +5,7 @@ import click
 
 from pathlib import Path
 
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory, jsonify, request, redirect
 
 
 app = Flask(__name__, static_folder=None)
@@ -14,6 +14,7 @@ current_files_dir = Path(os.getcwd())
 psfree_files_dir = current_files_dir / "PSFree"
 static_files_dir = current_files_dir / "static"
 is_debug = False
+redirect_url = None
 
 
 @app.route("/api/<path:path>", methods=["POST"])
@@ -49,6 +50,9 @@ def catch_static_routes(path: str = "index.html"):
 
 @app.route("/<path:path>", methods=["GET"])
 def catch_all_routes(path: str):
+    if redirect_url and "playstation.net" in request.host:
+        return redirect(redirect_url)
+
     file_path = psfree_files_dir / path
     return send_from_directory(file_path.parent, file_path.name)
 
@@ -57,9 +61,11 @@ def catch_all_routes(path: str):
 @click.option("--host", default="0.0.0.0", help="Host to run the server on")
 @click.option("--port", default=9191, help="Port to run the server on")
 @click.option("--debug", is_flag=True, help="Enable debug mode")
-def main(host: str, port: int, debug: bool):
-    global is_debug
+@click.option("--redirect-playstation-domain", default=None, type=str, help="Redirect *.playstation.net domain to other URL")
+def main(host: str, port: int, debug: bool, redirect_playstation_domain: str):
+    global is_debug, redirect_url
     is_debug = debug
+    redirect_url = redirect_playstation_domain
     app.run(host=host, port=port, debug=debug, threaded=True)
 
 
