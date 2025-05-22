@@ -1,3 +1,0 @@
-#!/bin/sh
-cd /root/PSFree-Luckfox
-python serve.py &

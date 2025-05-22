@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /root/PSFree-Luckfox
+python serve.py --port 80 --redirect-playstation-domain "http://psfree-luckfox.local" &
